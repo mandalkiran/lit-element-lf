@@ -1,4 +1,3 @@
-
 import '@vaadin/vaadin-grid';
 import '@vaadin/vaadin-item';
 import '@vaadin/vaadin-icons';
@@ -9,7 +8,7 @@ import {LitElement, html, css} from 'lit';
 import {addTodo, fetchTodo, removeTodo} from '../service/TodoService';
 
 /**
- * An example element.
+ * A Todo List component.
  *
  */
 export class TodoList extends LitElement {
@@ -26,13 +25,13 @@ export class TodoList extends LitElement {
     `;
   }
 
+  /**
+   * component properties typing.
+   */
   static get properties() {
     return {
-      /**
-       * The name to say "Hello" to.
-       */
       todos: {type: Array},
-      task: { type: String }
+      task: {type: String},
     };
   }
 
@@ -45,16 +44,16 @@ export class TodoList extends LitElement {
   }
 
   /**
-   * Called before component is first rendered.
+   * Called before component is first rendered to fetch the lists
    */
   async firstUpdated() {
-    await this.fetchTodoList()
+    await this.fetchTodoList();
   }
 
   render() {
     return html`
       <h1>To Do List</h1>
-       <div>
+      <div>
         <vaadin-text-field
           placeholder="Task"
           value="${this.task}"
@@ -64,14 +63,19 @@ export class TodoList extends LitElement {
           Add Todo
         </vaadin-button>
       </div>
-      ${this.todos.map( (todo, key) => html`
-        <vaadin-item>
+      ${this.todos.map(
+        (todo, key) => html`
+          <vaadin-item>
             ${key + 1}. ${todo.title}
-            <vaadin-button theme="error small icon" @click="${ e => this.deleteTodo(key)}">
-                <iron-icon icon="vaadin:trash" slot="prefix"></iron-icon>
+            <vaadin-button
+              theme="error small icon"
+              @click="${(e) => this.deleteTodo(key)}"
+            >
+              <iron-icon icon="vaadin:trash" slot="prefix"></iron-icon>
             </vaadin-button>
-        </vaadin-item>
-      `)}
+          </vaadin-item>
+        `
+      )}
     `;
   }
 
@@ -80,8 +84,8 @@ export class TodoList extends LitElement {
    *
    * @returns {Promise<Array>}
    */
-  async fetchTodoList(){
-    this.todos = await fetchTodo()
+  async fetchTodoList() {
+    this.todos = await fetchTodo();
   }
 
   /**
@@ -91,8 +95,8 @@ export class TodoList extends LitElement {
    */
   async addTodo() {
     if (this.task) {
-      await addTodo({ title: this.task})
-      await this.fetchTodoList()
+      await addTodo({title: this.task});
+      await this.fetchTodoList();
       this.task = '';
     }
   }
@@ -102,8 +106,8 @@ export class TodoList extends LitElement {
    * @returns {Promise<Array>}
    */
   async deleteTodo(key) {
-    await removeTodo(key)
-    await this.fetchTodoList()
+    await removeTodo(key);
+    await this.fetchTodoList();
   }
   /**
    * Bind the state (task) with value entered in textfield.
