@@ -69,7 +69,7 @@ export class TodoList extends LitElement {
             ${key + 1}. ${todo.title}
             <vaadin-button
               theme="error small icon"
-              @click="${(e) => this.deleteTodo(key)}"
+              @click="${(e) => this.deleteTodo(todo.id)}"
             >
               <iron-icon icon="vaadin:trash" slot="prefix"></iron-icon>
             </vaadin-button>
@@ -103,10 +103,11 @@ export class TodoList extends LitElement {
   /**
    * Remove Todo.
    *
+   * @params id of todo to remove
    * @returns {Promise<Array>}
    */
-  async deleteTodo(key) {
-    await removeTodo(key);
+  async deleteTodo(id) {
+    await removeTodo(id);
     await this.fetchTodoList();
   }
   /**

@@ -18,9 +18,10 @@ export function toJson({ title } = {}) {
  *
  * @returns {Object}
  */
-export function fromJson({ title }) {
+export function fromJson({ title, id }) {
   const encoded = {
-    title   //helpful if the property name is different than one used in entity/components
+    id,
+    title,   //helpful if the property name is different than one used in entity/components
   };
 
   return {

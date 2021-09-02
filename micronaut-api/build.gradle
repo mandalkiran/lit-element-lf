@@ -1,0 +1,49 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("io.micronaut.application") version "2.0.3"
+}
+
+version = "0.1"
+group = "test.app"
+
+repositories {
+    mavenCentral()
+}
+
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("test.app.*")
+    }
+}
+
+dependencies {
+    annotationProcessor("io.micronaut:micronaut-inject-java")
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    implementation("io.micronaut:micronaut-inject")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-runtime")
+    implementation("javax.annotation:javax.annotation-api")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    implementation("io.micronaut:micronaut-validation")
+    annotationProcessor("io.micronaut.data:micronaut-data-processor:3.0.0")
+    implementation group: 'io.micronaut.data', name: 'micronaut-data-hibernate-jpa', version: '3.0.0'
+    implementation group: 'io.micronaut.configuration', name: 'micronaut-jdbc-hikari', version: '2.2.6'
+    implementation group: 'javax.inject', name: 'javax.inject', version: '1'
+    implementation files('libs/ojdbc7.jar')
+    annotationProcessor "io.micronaut.data:micronaut-data-processor:1.0.0.M5"
+}
+
+
+application {
+    mainClass.set("test.app.Application")
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+    targetCompatibility = JavaVersion.toVersion("11")
+}
+
+
+

@@ -1,0 +1,22 @@
+micronaut:
+  application:
+    name: testApp
+  server:
+    cors:
+      enabled: true
+datasources:
+  default:
+    url: jdbc:oracle:thin:@localhost:1521/ORCLCDB.localdomain
+    driverClassName: oracle.jdbc.OracleDriver
+    username: test
+    password: test
+    dialect: org.hibernate.dialect.Oracle10gDialect
+jpa:
+  default:
+    packages-to-scan:
+      - 'test.app'
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        show_sql: true

@@ -4,9 +4,10 @@
  * @returns {Promise<Array>}
  */
 import * as Todo from '../entity/Todo';
-
+const url = 'http://localhost:8080/api'
 export const fetchTodo = async () => {
-  const todos = await getFromStorage()
+  const response = await fetch(`${url}/tasks`)
+  const todos = await response.json()
   return todos.map(tag => Todo.fromJson(tag));
 };
 
@@ -18,38 +19,23 @@ export const fetchTodo = async () => {
 
 export const addTodo = async (todo) => {
   const { data } = Todo.toJson(todo);
-  const existingTodos = await getFromStorage()
-  if (data) {
-    const saveTodo = [
-        ...existingTodos,
-      {
-        ...data
-      }
-    ];
-    localStorage.setItem('todos',JSON.stringify(saveTodo))
-  }
+  await fetch(`${url}/tasks`,{
+    method: "POST",
+    body: JSON.stringify({ ...data }),
+    headers:{
+      "Content-Type": "application/json"
+    }
+  })
 }
 
 /**
  * Remove a todo
  *
- * @param {Number} idx
+ * @param {Number} id
  */
 
-export const removeTodo = async (idx) => {
-  let todos = await getFromStorage()
-  todos = todos.filter((v, k) => idx !== k)
-  localStorage.setItem('todos',JSON.stringify(todos))
-}
-
-/**
- * fetch data from datasource
- *
- * @returns {Promise<Array>}
- */
-
-const getFromStorage = async () =>{
-  const storedTodo = await localStorage.getItem('todos');
-  if(!storedTodo) return []
-  return JSON.parse(storedTodo)
+export const removeTodo = async (id) => {
+  await fetch(`${url}/tasks/` + id, {
+    method: 'DELETE',
+  })
 }
