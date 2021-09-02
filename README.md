@@ -1,4 +1,4 @@
-## Basic Illustration of Understanding on Polymerjs Lit Element 
+## Basic Illustration of Understanding on Polymerjs Lit Element And Micronaut with Oracle datasource
 
 
 Please make sure follow are achieved 
@@ -7,4 +7,5 @@ Please make sure follow are achieved
 - Understanding of service, entity, and mapper to set and get data from datasource
 - UI Component usage I have used vaadin.
 - Routing
-- Docstrings
+- Docstrings (FE)
+- repositories, service, controllers and entities usage identical to exisiting BE projects
